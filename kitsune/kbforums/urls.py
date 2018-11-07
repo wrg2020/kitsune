@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.conf.urls import url
-from django.contrib.contenttypes.models import ContentType
 
 from kitsune.kbforums import views
 from kitsune.kbforums.feeds import ThreadsFeed, PostsFeed
@@ -44,6 +43,5 @@ urlpatterns = [
         name='wiki.discuss.delete_post'),
     # Flag discussion posts
     url(r'^(?P<object_id>\d+)/flag$', flagit_views.flag,
-        {'content_type': ContentType.objects.get_for_model(Post).id},
-        name='wiki.discuss.flag_post'),
+        {'model': Post}, name='wiki.discuss.flag_post'),
 ]

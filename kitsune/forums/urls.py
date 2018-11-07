@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.conf.urls import url, include
-from django.contrib.contenttypes.models import ContentType
 
 from kitsune.forums import views
 from kitsune.forums.feeds import ThreadsFeed, PostsFeed
@@ -44,8 +43,7 @@ forum_patterns = [
 
     # Flag posts
     url(r'^(?P<thread_id>\d+)/(?P<object_id>\d+)/flag$', flagit_views.flag,
-        {'content_type': ContentType.objects.get_for_model(Post).id},
-        name='forums.flag_post'),
+        {'model': Post}, name='forums.flag_post'),
 ]
 
 urlpatterns = [

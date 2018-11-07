@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.conf.urls import url
-from django.contrib.contenttypes.models import ContentType
 
 from kitsune.questions import views
 from kitsune.questions.feeds import (
@@ -107,11 +106,9 @@ urlpatterns = [
 
     # Flag content ("Report this post")
     url(r'^(?P<object_id>\d+)/flag$', flagit_views.flag,
-        {'content_type': ContentType.objects.get_for_model(Question).id},
-        name='questions.flag'),
+        {'model': Question}, name='questions.flag'),
     url(r'^(?P<question_id>\d+)/flag/(?P<object_id>\d+)$', flagit_views.flag,
-        {'content_type': ContentType.objects.get_for_model(Answer).id},
-        name='questions.answer_flag'),
+        {'model': Answer}, name='questions.answer_flag'),
 
     # Subcribe by email
     url(r'^(?P<question_id>\d+)/watch$', views.watch_question,

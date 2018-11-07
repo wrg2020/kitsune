@@ -1,5 +1,4 @@
 from django.conf.urls import url, include
-from django.contrib.contenttypes.models import ContentType
 
 import kitsune.flagit.views
 from kitsune.sumo.views import redirect_to
@@ -89,7 +88,6 @@ urlpatterns = [
     # URLs for a single user.
     url(r'^user/(?P<username>[\w@\.\s+-]+)/', include(detail_patterns)),
     url(r'^user/(?P<object_id>\w+)/flag$', kitsune.flagit.views.flag,
-        {'content_type': ContentType.objects.get_for_model(Profile).id},
-        name='users.flag'),
+        {'model': Profile}, name='users.flag'),
     url(r'^users/', include(users_patterns)),
 ]
