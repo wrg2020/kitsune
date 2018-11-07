@@ -49,9 +49,9 @@ def render_readouts(request, readouts, template, locale=None, extra_data=None, p
 
     data = {
         'readouts': OrderedDict((slug, class_(request, locale=locale,
-                                             product=product))
-                               for slug, class_ in readouts.iteritems()
-                               if class_.should_show_to(request)),
+                                product=product))
+                                for slug, class_ in readouts.iteritems()
+                                if class_.should_show_to(request)),
         'default_locale': settings.WIKI_DEFAULT_LANGUAGE,
         'default_locale_name': LOCALES[settings.WIKI_DEFAULT_LANGUAGE].native,
         'current_locale': current_locale,

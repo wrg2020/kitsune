@@ -4,6 +4,7 @@ from django.apps.config import AppConfig
 from kitsune.sumo.monkeypatch import patch  # noqa
 patch()
 
+
 class SumoConfig(AppConfig):
     name = 'kitsune.sumo'
 
