@@ -8,7 +8,6 @@ from kitsune.wiki.locale_views import LEADER, REVIEWER, EDITOR
 
 # These patterns inherit (?P<document_slug>[^\/]).
 document_patterns = [
-    url(r'^$', views.document, name='wiki.document'),
     url(r'^revision/(?P<revision_id>\d+)$', views.revision,
         name='wiki.revision'),
     url(r'^history$', views.document_revisions, name='wiki.document_revisions'),
@@ -66,7 +65,7 @@ locale_patterns = [
         {'role': LEADER}, name='wiki.remove_locale_leader'),
     url(r'add-reviewer$', locale_views.add_to_locale,
         {'role': REVIEWER}, name='wiki.add_locale_reviewer'),
-    url(r'^remove-reviewer/(?P<user_id>\d+)$', locale_views.remove_from_locale,
+    url(r'remove-reviewer/(?P<user_id>\d+)$', locale_views.remove_from_locale,
         {'role': REVIEWER}, name='wiki.remove_locale_reviewer'),
     url(r'add-editor$', locale_views.add_to_locale,
         {'role': EDITOR}, name='wiki.add_locale_editor'),
@@ -116,6 +115,7 @@ urlpatterns = [
     url(r'^save_draft$', views.draft_revision, name='wiki.draft_revision'),
     url(r'^category/(?P<category>\d+)$', views.list_documents,
         name='wiki.category'),
+    url(r'^(?P<document_slug>[^/]+)$', views.document, name='wiki.document'),
     url(r'^(?P<document_slug>[^/]+)/', include(document_patterns)),
 ]
 

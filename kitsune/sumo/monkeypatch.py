@@ -96,6 +96,7 @@ def patch():
 
     # Patch the admin
     admin.site = AdminSitePlus()
+    admin.sites.site = admin.site
     admin.site.site_header = 'Kitsune Administration'
     admin.site.site_title = 'Mozilla Support'
 

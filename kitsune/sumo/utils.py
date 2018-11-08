@@ -168,27 +168,6 @@ def truncated_json_dumps(obj, max_length, key, ensure_ascii=False):
     return json.dumps(dupe, ensure_ascii=ensure_ascii)
 
 
-def user_or_ip(key_prefix):
-    """Used for generating rate limiting keys. Returns a function to pass on
-    to rate limit. The function return returns a key with IP address for
-    anonymous users, and pks for authenticated users.
-
-    Examples
-        Anonymous: 'uip:<key_prefix>:127.0.0.1'
-        Authenticated: 'uip:<key_prefix>:17859'
-    """
-
-    def _user_or_ip(request):
-        if hasattr(request, 'user') and request.user.is_authenticated():
-            key = str(request.user.pk)
-        else:
-            key = request.META.get('HTTP_X_CLUSTER_CLIENT_IP',
-                                   request.META['REMOTE_ADDR'])
-        return 'uip:%s:%s' % (key_prefix, key)
-
-    return _user_or_ip
-
-
 @contextmanager
 def uselocale(locale):
     """
@@ -318,9 +297,11 @@ def is_ratelimited(request, name, rate, method=['POST'], skip_if=lambda r: False
     if skip_if(request) or request.user.has_perm('sumo.bypass_ratelimit'):
         request.limited = False
     else:
-        # TODO: make sure this still works - may need to modify user_or_ip function
-        rl_is_ratelimited(
-            request, increment=True, rate=rate, key=user_or_ip(name))
+        # TODO: make sure 'group' value below is sufficient
+        # TODO: make sure 'user_or_ip' is a valid replacement for
+        # old/deleted custom user_or_ip method
+        rl_is_ratelimited(request, increment=True, group='sumo.utils.is_ratelimited',
+                          rate=rate, key='user_or_ip')
         if request.limited:
             if hasattr(request, 'user') and request.user.is_authenticated():
                 key = 'user "{}"'.format(request.user.username)
