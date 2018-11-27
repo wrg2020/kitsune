@@ -50,7 +50,7 @@ class NotificationSerializer(serializers.ModelSerializer):
 
 
 class NotificationFilter(django_filters.FilterSet):
-    is_read = django_filters.MethodFilter(action='filter_is_read')
+    is_read = django_filters.CharFilter(method='filter_is_read')
 
     class Meta(object):
         model = Notification

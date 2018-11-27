@@ -138,11 +138,11 @@ class QuestionFKSerializer(QuestionSerializer):
 class QuestionFilter(django_filters.FilterSet):
     product = django_filters.CharFilter(name='product__slug')
     creator = django_filters.CharFilter(name='creator__username')
-    involved = django_filters.MethodFilter(action='filter_involved')
-    is_solved = django_filters.MethodFilter(action='filter_is_solved')
-    is_taken = django_filters.MethodFilter(action='filter_is_taken')
-    metadata = django_filters.MethodFilter(action='filter_metadata')
-    solved_by = django_filters.MethodFilter(action='filter_solved_by')
+    involved = django_filters.CharFilter(method='filter_involved')
+    is_solved = django_filters.CharFilter(method='filter_is_solved')
+    is_taken = django_filters.CharFilter(method='filter_is_taken')
+    metadata = django_filters.CharFilter(method='filter_metadata')
+    solved_by = django_filters.CharFilter(method='filter_solved_by')
     taken_by = django_filters.CharFilter(name='taken_by__username')
 
     class Meta(object):
