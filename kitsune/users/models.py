@@ -13,7 +13,7 @@ from django.utils.translation import ugettext as _, ugettext_lazy as _lazy
 
 from celery.task import task
 from django_statsd.clients import statsd
-from timezones.fields import TimeZoneField
+from kitsune.timezones.fields import TimeZoneField
 
 from kitsune.lib.countries import COUNTRIES
 from kitsune.search.es_utils import UnindexMeBro
