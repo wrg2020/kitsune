@@ -14,6 +14,7 @@ from django.views.decorators.http import require_GET
 import waffle
 from django_statsd.clients import statsd
 
+import django_filters
 from rest_framework import viewsets, serializers, mixins, filters, permissions, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -283,7 +284,7 @@ class ProfileViewSet(mixins.CreateModelMixin,
         OnlySelfEdits,
     ]
     filter_backends = [
-        filters.DjangoFilterBackend,
+        django_filters.rest_framework.DjangoFilterBackend,
         filters.OrderingFilter,
     ]
     filter_fields = []
