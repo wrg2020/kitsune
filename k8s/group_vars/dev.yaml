@@ -1,0 +1,5 @@
+banner: this is dev
+SUMO_APP_NAME: sumo-dev
+SUMO_ENV_PORT: 9000
+SUMO_NODEPORT_NAME: "{{ SUMO_APP_NAME }}-nodeport"
+K8S_NAMESPACE: "{{ SUMO_APP_NAME }}"

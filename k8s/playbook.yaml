@@ -1,0 +1,31 @@
+- name: render dev templates
+  connection: local
+  hosts: '{{ host }}'
+  vars:
+    render_secrets: false
+  tasks:
+  - name: create temp work dir
+    tempfile:
+      state: directory
+      suffix: sumo-k8s
+    register: tempdir
+  - set_fact:
+      app_template_out: "{{tempdir.path}}/sumo-{{ host }}-app.yaml"
+  - set_fact:
+      nodeport_template_out: "{{tempdir.path}}/sumo-{{ host }}-nodeport.yaml"
+  - debug: msg="TEST = {{ app_template_out }}"
+  - debug: msg="TEST = {{ nodeport_template_out }}"
+  - name: render nodeport template
+    template:
+      src: ./templates/sumo-nodeport.yaml.j2
+      dest: "{{ nodeport_template_out }}"
+      mode: 0644
+  - name: render app template
+    template:
+      src: ./templates/sumo-app.yaml.j2
+      dest: "{{ app_template_out }}"
+      mode: 0644
+  - name: check app syntax
+    debug: msg="kubeval {{ app_template_out }}"
+  - name: check nodeport syntax
+    debug: msg="kubeval {{ nodeport_template_out }}"

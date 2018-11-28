@@ -1,0 +1,8 @@
+[dev]
+localhost
+
+[stage]
+localhost
+
+[prod]
+localhost
