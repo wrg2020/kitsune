@@ -1,6 +1,7 @@
 import datetime
 import time
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import pre_save
@@ -131,8 +132,10 @@ class Thread(NotificationsMixin, ModelBase, SearchMixin):
         if attr == 'forum' and not hasattr(self, '_old_forum'):
             try:
                 old = self.forum
-            except AttributeError:  # When making a new Thread(forum=3), the
-                pass                # forum attr doesn't exist yet.
+            # When making a new Thread(forum=3), the
+            # forum attr doesn't exist yet.
+            except (AttributeError, ObjectDoesNotExist):
+                pass
             else:
                 self._old_forum = old
         super(Thread, self).__setattr__(attr, val)

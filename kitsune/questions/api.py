@@ -235,7 +235,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
     ]
     filter_class = QuestionFilter
     filter_backends = [
-        filters.DjangoFilterBackend,
+        django_filters.rest_framework.DjangoFilterBackend,
         filters.OrderingFilter,
     ]
     ordering_fields = [
@@ -463,7 +463,7 @@ class AnswerViewSet(viewsets.ModelViewSet):
     ]
     filter_class = AnswerFilter
     filter_backends = [
-        filters.DjangoFilterBackend,
+        django_filters.rest_framework.DjangoFilterBackend,
         filters.OrderingFilter,
     ]
     filter_fields = [
