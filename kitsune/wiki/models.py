@@ -328,12 +328,15 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin,
         self.parse_and_calculate_links()
         self.clear_cached_html()
 
+    # TODO: this is causing an infinite loop
     def __setattr__(self, name, value):
         """Trap setting slug and title, recording initial value."""
         # Public API: delete the old_title or old_slug attrs after changing
         # title or slug (respectively) to suppress redirect generation.
         if getattr(self, 'id', None):
             # I have been saved and so am worthy of a redirect.
+            # TODO: the line below is where the infinite loop begins
+            # hasattr seems to result in calling __setattr__ again, which is the loop
             if name in ('slug', 'title') and hasattr(self, name):
                 old_name = 'old_' + name
                 if not hasattr(self, old_name):
