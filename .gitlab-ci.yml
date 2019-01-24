@@ -1,2 +1,3 @@
 k8s_deploy:
-  - kubectl config current-context
+  script:
+    - kubectl config current-context
